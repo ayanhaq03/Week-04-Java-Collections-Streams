@@ -62,4 +62,53 @@ class PolicyManagement {
         policies.values().removeIf(policy -> policy.getExpiryDate().before(now));
         orderedPolicies.values().removeIf(policy -> policy.getExpiryDate().before(now));
     }
+    public static void main(String[] args) {
+        PolicyManagement policyManager = new PolicyManagement();
+
+        // Creating some sample policies
+        Calendar cal = Calendar.getInstance();
+
+        cal.set(2025, Calendar.JANUARY, 10);
+        InsurancePolicy policy1 = new InsurancePolicy("P123", "John Doe", cal.getTime(), "Health", 5000.0);
+
+        cal.set(2024, Calendar.MARCH, 15);
+        InsurancePolicy policy2 = new InsurancePolicy("P124", "Alice Smith", cal.getTime(), "Car", 3000.0);
+
+        cal.set(2024, Calendar.FEBRUARY, 25);
+        InsurancePolicy policy3 = new InsurancePolicy("P125", "Bob Johnson", cal.getTime(), "Home", 4000.0);
+
+        cal.set(2025, Calendar.JUNE, 5);
+        InsurancePolicy policy4 = new InsurancePolicy("P126", "Emily Brown", cal.getTime(), "Life", 7000.0);
+
+        // Adding policies
+        policyManager.addPolicy(policy1);
+        policyManager.addPolicy(policy2);
+        policyManager.addPolicy(policy3);
+        policyManager.addPolicy(policy4);
+
+        // Display all policies
+        System.out.println("All Policies:");
+        System.out.println(policyManager.getPolicy("P123"));
+        System.out.println(policyManager.getPolicy("P124"));
+        System.out.println(policyManager.getPolicy("P125"));
+        System.out.println(policyManager.getPolicy("P126"));
+
+        // Check expiring soon policies
+        System.out.println("\nPolicies expiring in the next 60 days:");
+        List<InsurancePolicy> expiringPolicies = policyManager.getExpiringSoon(60);
+        for (InsurancePolicy policy : expiringPolicies) {
+            System.out.println(policy);
+        }
+
+        // Remove expired policies
+        System.out.println("\nRemoving expired policies...");
+        policyManager.removeExpiredPolicies();
+
+        // Display all policies after removal
+        System.out.println("\nPolicies after removing expired ones:");
+        System.out.println(policyManager.getPolicy("P123"));
+        System.out.println(policyManager.getPolicy("P124")); // Might be removed
+        System.out.println(policyManager.getPolicy("P125")); // Might be removed
+        System.out.println(policyManager.getPolicy("P126"));
+    }
 }
