@@ -1,4 +1,4 @@
-package regex.validate_username;
+package regex.basic_regex_problem.validate_username;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
